@@ -1,3 +1,23 @@
 <router-outlet></router-outlet>
 
-<button class="btn btn-danger">Prueba botón</button>
+<div *ngIf="auth.getUser() | async; then authenticated else guest">
+</div>
+
+<ng-template #guest>
+  <h3>GUEST</h3>
+  <p>Login to get started...</p>
+
+  <button class="btn btn-danger" (click)="auth.googleSignIn()">
+    <i class="fa fa-google"></i> Sign in with Google
+  </button>
+</ng-template>
+
+
+<ng-template #authenticated>
+  <div *ngIf="auth.getUser() | async as user">
+    <img [src]="user.photoURL" alt="profile picture">
+    <h3>Welcome {{ user.displayName }}</h3>
+    <button class="btn btn-primary" (click)="auth.signOut()">Logout</button>
+  </div>
+</ng-template>
+
