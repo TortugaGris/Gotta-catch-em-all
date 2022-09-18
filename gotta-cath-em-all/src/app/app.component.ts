@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { PokemonService } from './services/pokemon.service'
+import { IPokemon } from './services/IPokemon';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,14 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'gotta-cath-em-all';
-  constructor(public auth: AuthService) { }
+  currentPokemon: IPokemon = {id: 0, name: ""};
+  
+  constructor(
+    public auth: AuthService,
+    public pokemon: PokemonService) { 
+    }
+
+  getPokemon() {
+    this.pokemon.getRandomPokemon().subscribe(data => this.currentPokemon = data)
+  }
 }

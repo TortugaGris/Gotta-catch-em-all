@@ -8,6 +8,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { HttpClientModule } from '@angular/common/http'
+
 const config = {
   apiKey: "AIzaSyC-zfmP__i_E68tdjcE3ZPUuKu-mwiaSIA",
   authDomain: "gotta-catch-em-all-353fe.firebaseapp.com",
@@ -27,6 +29,7 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
