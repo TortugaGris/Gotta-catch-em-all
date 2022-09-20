@@ -9,11 +9,13 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { HomePageComponent } from './home-page/home-page.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+<main class="container d-flex w-100 justify-content-center">
+  <div *ngIf="auth.getUser() | async; then authenticated else guest">
+  </div>
+</main>
+
+<ng-template #guest>
+  <button class="btn btn-danger align-self-center" (click)="auth.googleSignIn()">
+    Log-in with Google
+  </button>
+</ng-template>
+
+
+<ng-template #authenticated>
+  <div class="d-flex align-self-center justify-content-center flex-column" *ngIf="auth.getUser() | async as user">
+    <!-- <img [src]="user.photoURL" alt="profile picture"> -->
+    <h3>Welcome {{ user.displayName }}</h3>
+    <div class="container pt-2 pb-2">
+      <a class="btn btn-dark col-6">Gotta cath'em all</a>
+      <a class="btn btn-light col-6">Capture History</a>
+    </div>
+    <button class="btn btn-primary" (click)="auth.signOut()">Logout</button>
+    <!-- <h3>{{ currentPokemon.id }} {{ currentPokemon.name }}</h3> -->
+    <!-- <button class="btn btn-primary" (click)="getPokemon()">Random Pokemon</button> -->
+    <!-- <button class="btn btn-primary" (click)="capturePokemon(user.uid)">Capture Pokemon</button> -->
+    <!-- <button class="btn btn-primary" (click)="pokemonCaptureService.getUserCaptures(user.uid)">Pokemon List</button> -->
+    <!-- <ul> -->
+    <!--   <li *ngFor="let pokemon of pokemonCaptureService.getUserCaptures(user.uid) | async"> -->
+    <!--     {{ pokemon.pokemonName }} -->
+    <!--   </li> -->
+    <!-- </ul> -->
+  </div>
+</ng-template>

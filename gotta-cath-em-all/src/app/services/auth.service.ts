@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  user$: Observable<User | null | undefined>;
+  private user$: Observable<User | null | undefined>;
 
   constructor(
     private afAuth: AngularFireAuth,
