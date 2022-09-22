@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IPokemon } from '../services/IPokemon';
+import { IPokemon } from '../interfaces/IPokemon';
 import { AuthService } from '../services/auth.service';
 import { PokemonService } from '../services/pokemon.service'
 import { PokemonCaptureService } from '../services/pokemon-capture.service';
-import { IPokemonCapture } from '../services/IPokemonCapture';
+import { IPokemonCapture } from '../interfaces/IPokemonCapture';
 import { serverTimestamp } from 'firebase/firestore';
 
 @Component({
@@ -20,17 +20,12 @@ export class HomePageComponent implements OnInit {
     public pokemonService: PokemonService,
     public pokemonCaptureService: PokemonCaptureService) 
   { 
-    this.getPokemon()
   }
 
   ngOnInit(): void {
 
   }
 
-  getPokemon() {
-    this.pokemonService.getRandomPokemon()
-        .subscribe(data => this.currentPokemon = data)
-  }
 
   capturePokemon(userId:string) {
     let pokemonCapture: IPokemonCapture = {
@@ -39,7 +34,7 @@ export class HomePageComponent implements OnInit {
       captureTime: serverTimestamp(),
       pokemonName: this.currentPokemon.name,
       pokemonType: this.currentPokemon.types,
-      pokemonImageUrl: this.currentPokemon.sprites?.front_default,
+      pokemonImageUrl: this.currentPokemon.sprites?.other['official-artwork'].front_default,
     }
     this.pokemonCaptureService.addPokemonCapture(pokemonCapture)
   }

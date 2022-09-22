@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPokemonList } from './IPokemonList';
-import { IPokemon } from './IPokemon';
+import { IPokemonList } from '../interfaces/IPokemonList';
+import { IPokemon } from '../interfaces/IPokemon';
 
 
 @Injectable({
