@@ -1,4 +1,4 @@
-import { Type } from './IPokemon';
+import { Types } from './IPokemon';
 import { serverTimestamp, FieldValue } from 'firebase/firestore';
 
 export interface IPokemonCapture {
@@ -6,7 +6,7 @@ export interface IPokemonCapture {
   pokemonId: number;
   captureTime?: typeof serverTimestamp | FieldValue;
   pokemonName: string;
-  pokemonType?: Type[];
+  pokemonType?: Types[];
   pokemonImageUrl?: string;
 
 }

@@ -1,8 +1,8 @@
 export interface IPokemon {
   id: number;
   name: string;
-  types?: Type[];
-  sprites?: Sprites;
+  types?: Types[];
+  sprites: Sprites;
 }
 
 export interface Types {
@@ -16,11 +16,14 @@ export interface Type {
 }
 
 export interface Sprites {
-    other: {
-      "official-artwork": {
-        front_default: string;
-      }
-    };
+  other: Other;
 }
 
+export interface Other {
+  'official-artwork': Artwork;
+}
+
+export interface Artwork {
+  front_default: string;
+}
 

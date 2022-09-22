@@ -4,7 +4,7 @@ Test project for capturing pokemons
 
 ## Getting started
 
-To use this project you to add an `environment.ts` file in `src/environments/environment.ts`
+To use this project you need to add an `environment.ts` file in `src/environments/environment.ts`
 
 ```js
 export const environment = {

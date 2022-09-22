@@ -1,1 +1,20 @@
-<p>grass-view works!</p>
+<main class="container">
+  <div class="row justify-content-center mt-5">
+    <app-pokemon-view 
+       class="col-3"
+      [pokemonName]="currentPokemon.name" 
+      [sprite]="currentPokemon.sprites.other['official-artwork'].front_default"
+      [types]="currentPokemon.types">
+    </app-pokemon-view>
+  </div>
+  <div class="row justify-content-center m-5">
+   <button class="btn btn-primary col-3" (click)="getPokemon()">Random Pokemon</button>
+  </div>
+</main>
+<!-- <button class="btn btn-primary" (click)="capturePokemon(user.uid)">Capture Pokemon</button> -->
+<!-- <button class="btn btn-primary" (click)="pokemonCaptureService.getUserCaptures(user.uid)">Pokemon List</button> -->
+<!-- <ul> -->
+<!--   <li *ngFor="let pokemon of pokemonCaptureService.getUserCaptures(user.uid) | async"> -->
+<!--     {{ pokemon.pokemonName }} -->
+<!--   </li> -->
+<!-- </ul> -->

@@ -13,7 +13,15 @@ import { serverTimestamp } from 'firebase/firestore';
 })
 export class HomePageComponent implements OnInit {
   title = 'gotta-cath-em-all';
-  currentPokemon: IPokemon = {id: 0, name: ""};
+  currentPokemon: IPokemon = {id: 0, name: "", 
+    sprites: {
+      other: {
+        "official-artwork": {
+          front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/0.png"
+        }
+      }
+    }
+  };
 
   constructor(
     public auth: AuthService,
