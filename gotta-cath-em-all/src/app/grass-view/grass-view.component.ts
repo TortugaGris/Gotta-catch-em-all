@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../services/pokemon.service'
 import { IPokemon } from '../interfaces/IPokemon';
+import { IPokemonCapture } from '../interfaces/IPokemonCapture';
+import { serverTimestamp } from 'firebase/firestore';
+import { PokemonCaptureService } from '../services/pokemon-capture.service';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-grass-view',
@@ -8,6 +13,8 @@ import { IPokemon } from '../interfaces/IPokemon';
   styleUrls: ['./grass-view.component.scss']
 })
 export class GrassViewComponent implements OnInit {
+  uid="";
+  userSubscription: Subscription;
   currentPokemon: IPokemon = {id: 0, name: "", 
     sprites: {
       other: {
@@ -18,8 +25,13 @@ export class GrassViewComponent implements OnInit {
     }
   };
 
-  constructor(private pokemonService: PokemonService) {
+  constructor(private pokemonService: PokemonService,
+              private  pokemonCaptureService: PokemonCaptureService,
+              private auth: AuthService) {
     this.getPokemon()
+    this.userSubscription = this.auth.getUser().subscribe(
+      user => {if(user) this.uid = user.uid},
+      err => console.error(err))
   }
 
   ngOnInit(): void {
@@ -28,6 +40,25 @@ export class GrassViewComponent implements OnInit {
   getPokemon() {
     this.pokemonService.getRandomPokemon()
         .subscribe(data => this.currentPokemon = data)
+  }
+
+  capture(prob: boolean) {
+    if (prob) {
+      let pokemonCapture: IPokemonCapture = {
+        userId: this.uid,
+        pokemonId: this.currentPokemon.id,
+        captureTime: serverTimestamp(),
+        pokemonName: this.currentPokemon.name,
+        pokemonType: this.currentPokemon.types,
+        pokemonImageUrl: this.currentPokemon.sprites?.other['official-artwork'].front_default,
+      }
+      this.pokemonCaptureService.addPokemonCapture(pokemonCapture)
+    }
+    this.getPokemon();
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
   }
 
 }
