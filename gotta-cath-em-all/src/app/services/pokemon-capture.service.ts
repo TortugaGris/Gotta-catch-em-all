@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { IPokemonCapture } from '../interfaces/IPokemonCapture';
+import { ICaptureList } from '../interfaces/ICaptureList'
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,9 @@ export class PokemonCaptureService {
     this.db.collection('captures').doc(capturesId).delete();
   }
 
-  // getUserCaptures(userId:string) {
-  //   console.log(userId);
-  //   return this.db.collection<IPokemonCapture>('captures',
-  //                                              ref => ref.where('userId', '==', userId))
-  //                                              .valueChanges();
-  // }
+  getUserCaptures(userId:string) {
+    return this.db.collection<ICaptureList>('captures',
+                                               ref => ref.where('userId', '==', userId))
+                                               .valueChanges({ idField: 'docId' });
+  }
 }
