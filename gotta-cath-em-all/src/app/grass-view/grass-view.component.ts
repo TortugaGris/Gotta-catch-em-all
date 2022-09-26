@@ -34,14 +34,21 @@ export class GrassViewComponent implements OnInit {
       err => console.error(err))
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  /**
+   * Get a random pokemon using the pokemonService
+   */
   getPokemon() {
     this.pokemonService.getRandomPokemon()
         .subscribe(data => this.currentPokemon = data)
   }
 
+  /**
+   * Add a new document to the captures collection if Pokeball landed on Pokemon.
+   * Then get a new random Pokemon.
+   * @param prob - True if Pokeball landed on Pokemon
+   */
   capture(prob: boolean) {
     if (prob) {
       let pokemonCapture: IPokemonCapture = {

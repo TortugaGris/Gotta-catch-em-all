@@ -19,9 +19,11 @@ export class PokeballSelectorComponent implements OnInit {
     ]
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
+  /**
+   * Emit a boolean wich indicates if the Pokemon has been captured 
+   * @param prob - Probability of capturing the Pokemon
+   */
   capturePokemon(prob: number){
     this.captureEvent.emit(Math.random()<prob)
   }
