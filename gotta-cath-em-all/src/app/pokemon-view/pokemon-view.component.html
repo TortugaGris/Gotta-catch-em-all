@@ -1,5 +1,5 @@
 <p-card [header]="pokemonName | pokemonName" [subheader]="types | types" styleClass="p-card-shadow">
     <ng-template pTemplate="header">
-        <img class="p-3" alt="Card" [src]="sprite">
+        <img class="p-3" alt="Card" [src]="firstSprite(sprite)">
     </ng-template>
 </p-card>

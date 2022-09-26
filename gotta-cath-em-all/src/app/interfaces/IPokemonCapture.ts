@@ -7,6 +7,6 @@ export interface IPokemonCapture {
   captureTime?: typeof serverTimestamp | FieldValue | Timestamp;
   pokemonName: string;
   pokemonType?: Types[];
-  pokemonImageUrl?: string;
+  pokemonImageUrl?: string | null;
 
 }
