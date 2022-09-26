@@ -6,6 +6,11 @@ import { Types } from '../interfaces/IPokemon';
 })
 export class TypesPipe implements PipeTransform {
 
+  /**
+   * Transfrom a list of types in a string where the types are in upper case 
+   * and separated by a dash
+   * @param value - List of types
+   */
   transform(value: Types[] | undefined): string {
     let str = "";
     if (value){
