@@ -1,0 +1,16 @@
+<main class="container">
+  <div class="d-inline-block" *ngFor="let capture of captures$ | async">
+    <p-card [header]="capture.pokemonName | pokemonName" 
+            [subheader]="capture.pokemonType | types" 
+            [style]="{'width': '280px', 'margin': '1rem'}"
+            styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+            <img class="p-3" alt="Card" [src]="capture.pokemonImageUrl">
+        </ng-template>
+        {{capture.captureTime.toDate() | date: 'dd/MM/yyyy hh:mm'}}
+        <ng-template pTemplate="footer">
+          <button class="btn btn-danger" (click)="pokemonCapture.deletePokemonCapture(capture.docId)">Release</button>
+        </ng-template>
+    </p-card>
+  </div>
+</main>

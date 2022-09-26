@@ -21,6 +21,7 @@ import {MenuModule} from 'primeng/menu';
 
 import { PokemonNamePipe } from './pipes/pokemon-name.pipe';
 import { TypesPipe } from './pipes/types.pipe';
+import { CapturesViewComponent } from './captures-view/captures-view.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TypesPipe } from './pipes/types.pipe';
     PokemonViewComponent,
     PokemonNamePipe,
     TypesPipe,
-    PokeballSelectorComponent
+    PokeballSelectorComponent,
+    CapturesViewComponent
   ],
   imports: [
     BrowserModule,

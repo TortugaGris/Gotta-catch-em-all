@@ -16,7 +16,7 @@
     <h3>Welcome {{ user.displayName }}</h3>
     <div class="container pt-2 pb-2">
       <a class="btn btn-dark col-6" routerLink="/grass">Gotta cath'em all</a>
-      <a class="btn btn-light col-6">Capture History</a>
+      <a class="btn btn-light col-6" routerLink="/captures">Capture History</a>
     </div>
     <button class="btn btn-primary" (click)="auth.signOut()">Logout</button>
   </div>
