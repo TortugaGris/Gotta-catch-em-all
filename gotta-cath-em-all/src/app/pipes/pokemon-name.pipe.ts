@@ -12,11 +12,14 @@ export class PokemonNamePipe implements PipeTransform {
    * @param value - Pokemon name
    */
   transform(value: string): string{   
-    let words = value.split('-') 
-    for (let i = 0; i < words.length; i++) {
-      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    if (value != ""){
+      let words = value.split('-');
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+      }
+      return words.join(' ');
     }
-    return words.join(' ');
+    return ""
   }
 
 }
