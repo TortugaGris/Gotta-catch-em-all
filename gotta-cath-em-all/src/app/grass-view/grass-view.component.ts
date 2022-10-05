@@ -5,7 +5,7 @@ import { IPokemonCapture } from '../interfaces/IPokemonCapture';
 import { serverTimestamp } from 'firebase/firestore';
 import { PokemonCaptureService } from '../services/pokemon-capture.service';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-grass-view',
@@ -15,15 +15,7 @@ import { Subscription } from 'rxjs';
 export class GrassViewComponent implements OnInit {
   uid="";
   userSubscription: Subscription;
-  currentPokemon: IPokemon = {id: 0, name: "", 
-    sprites: {
-      other: {
-        "official-artwork": {
-          front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/0.png"
-        }
-      }
-    }
-  };
+  currentPokemon$: Observable<IPokemon | null> = of(null);
 
   constructor(private pokemonService: PokemonService,
               private  pokemonCaptureService: PokemonCaptureService,
@@ -40,24 +32,24 @@ export class GrassViewComponent implements OnInit {
    * Get a random pokemon using the pokemonService
    */
   getPokemon() {
-    this.pokemonService.getRandomPokemon()
-        .subscribe(data => this.currentPokemon = data)
+    this.currentPokemon$ = this.pokemonService.getRandomPokemon();
   }
 
   /**
    * Add a new document to the captures collection if Pokeball landed on Pokemon.
    * Then get a new random Pokemon.
    * @param prob - True if Pokeball landed on Pokemon
+   * @param pokemon - The Pokemon that was captured
    */
-  capture(prob: boolean) {
+  capture(prob: boolean, pokemon: IPokemon) {
     if (prob) {
       let pokemonCapture: IPokemonCapture = {
         userId: this.uid,
-        pokemonId: this.currentPokemon.id,
+        pokemonId: pokemon.id,
         captureTime: serverTimestamp(),
-        pokemonName: this.currentPokemon.name,
-        pokemonType: this.currentPokemon.types,
-        pokemonImageUrl: this.currentPokemon.sprites?.other['official-artwork'].front_default,
+        pokemonName: pokemon.name,
+        pokemonType: pokemon.types,
+        pokemonImageUrl: pokemon.sprites?.other['official-artwork'].front_default,
       }
       this.pokemonCaptureService.addPokemonCapture(pokemonCapture)
     }
