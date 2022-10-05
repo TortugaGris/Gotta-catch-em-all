@@ -8,14 +8,14 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private user$: Observable<User | null | undefined>;
+  private user$: Observable<User | null>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -27,7 +27,9 @@ export class AuthService {
       switchMap(user => {
         if (user) {
           //Logged in
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges().pipe(
+            map(user => user ?? null)
+          );
         } else {
           // Logged out
           return of(null);
@@ -41,12 +43,12 @@ export class AuthService {
    * then fetch the Firestore user document or return null
    * @returns Observable to user document
    */
-  getUser() {
-    return this.user$
+  getUser(): Observable<User | null> {
+    return this.user$;
   }
-  
+
   /**
-   * Sign in with pop up window, using google authentication and update user 
+   * Sign in with pop up window, using google authentication and update user
    * document with google credentials.
    */
   async googleSignIn () {
@@ -74,7 +76,7 @@ export class AuthService {
 
     return userRef.set(data, { merge: true });
   }
-  
+
   /**
    * Signs out the current user and return to a safe route
    */

@@ -1,13 +1,15 @@
-<main class="container" *ngIf="currentPokemon$ | async as currentPokemon">
-  <div class="row justify-content-center mt-5">
-    <app-pokemon-view
-       class="col-3"
-      [pokemonName]="currentPokemon.name"
-      [sprite]="currentPokemon.sprites"
-      [types]="currentPokemon.types">
-    </app-pokemon-view>
-  </div>
-  <div class="row justify-content-center m-5">
-   <app-pokeball-selector (captureEvent)="capture($event, currentPokemon)" class="col-3"></app-pokeball-selector>
-  </div>
-</main>
+<ng-container *ngIf="user$ | async as user">
+  <main class="container" *ngIf="currentPokemon$ | async as currentPokemon">
+    <div class="row justify-content-center mt-5">
+      <app-pokemon-view
+        class="col-3"
+        [pokemonName]="currentPokemon.name"
+        [sprite]="currentPokemon.sprites"
+        [types]="currentPokemon.types">
+      </app-pokemon-view>
+    </div>
+    <div class="row justify-content-center m-5">
+      <app-pokeball-selector (captureEvent)="capture($event, currentPokemon, user)" class="col-3"></app-pokeball-selector>
+    </div>
+  </main>
+</ng-container>

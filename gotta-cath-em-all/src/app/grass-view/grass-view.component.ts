@@ -1,32 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { PokemonService } from '../services/pokemon.service'
-import { IPokemon } from '../interfaces/IPokemon';
-import { IPokemonCapture } from '../interfaces/IPokemonCapture';
-import { serverTimestamp } from 'firebase/firestore';
-import { PokemonCaptureService } from '../services/pokemon-capture.service';
-import { AuthService } from '../services/auth.service';
-import {Observable, of, Subscription} from 'rxjs';
+import {Component} from '@angular/core';
+import {PokemonService} from '../services/pokemon.service'
+import {IPokemon} from '../interfaces/IPokemon';
+import {IPokemonCapture} from '../interfaces/IPokemonCapture';
+import {serverTimestamp} from 'firebase/firestore';
+import {PokemonCaptureService} from '../services/pokemon-capture.service';
+import {AuthService} from '../services/auth.service';
+import {Observable, of} from 'rxjs';
+import {User} from "../services/user.model";
 
 @Component({
   selector: 'app-grass-view',
   templateUrl: './grass-view.component.html',
   styleUrls: ['./grass-view.component.scss']
 })
-export class GrassViewComponent implements OnInit {
-  uid="";
-  userSubscription: Subscription;
+export class GrassViewComponent {
+  user$: Observable<User | null> = this.auth.getUser();
   currentPokemon$: Observable<IPokemon | null> = of(null);
 
   constructor(private pokemonService: PokemonService,
-              private  pokemonCaptureService: PokemonCaptureService,
+              private pokemonCaptureService: PokemonCaptureService,
               private auth: AuthService) {
     this.getPokemon()
-    this.userSubscription = this.auth.getUser().subscribe(
-      user => {if(user) this.uid = user.uid},
-      err => console.error(err))
   }
-
-  ngOnInit(): void {}
 
   /**
    * Get a random pokemon using the pokemonService
@@ -40,11 +35,12 @@ export class GrassViewComponent implements OnInit {
    * Then get a new random Pokemon.
    * @param prob - True if Pokeball landed on Pokemon
    * @param pokemon - The Pokemon that was captured
+   * @param user - The user that captured the Pokemon
    */
-  capture(prob: boolean, pokemon: IPokemon) {
+  capture(prob: boolean, pokemon: IPokemon, user: User) {
     if (prob) {
       let pokemonCapture: IPokemonCapture = {
-        userId: this.uid,
+        userId: user.uid,
         pokemonId: pokemon.id,
         captureTime: serverTimestamp(),
         pokemonName: pokemon.name,
@@ -55,9 +51,4 @@ export class GrassViewComponent implements OnInit {
     }
     this.getPokemon();
   }
-
-  ngOnDestroy() {
-    this.userSubscription.unsubscribe();
-  }
-
 }
